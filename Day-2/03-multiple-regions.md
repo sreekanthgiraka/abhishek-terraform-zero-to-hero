@@ -16,15 +16,26 @@ provider "aws" {
   region = "us-west-2"
 }
 
+provider "aws" {
+   alias = "bucket_creater"
+   profile = "bucket_user"
+   region = "us-east-1"
+}
+
 resource "aws_instance" "example" {
   ami = "ami-0123456789abcdef0"
   instance_type = "t2.micro"
-  provider = "aws.us-east-1"
+  provider = aws.us-east-1
 }
 
 resource "aws_instance" "example2" {
   ami = "ami-0123456789abcdef0"
   instance_type = "t2.micro"
-  provider = "aws.us-west-2"
+  provider = aws.us-west-2
+}
+
+resource "aws_s3_bucket" "bucket1" {
+    bucket = "terraform-basha-test1"
+    provider = aws.bucket_creater
 }
 ```
