@@ -1,5 +1,7 @@
 # Multiple Region Implementation in Terraform
 
+# we can define multiple credentials and we can use in our resource block.
+
 You can make use of `alias` keyword to implement multi region infrastructure setup in
 terraform.
 
