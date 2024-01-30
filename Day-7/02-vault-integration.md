@@ -81,34 +81,26 @@ This command tells Vault to enable the AppRole authentication method.
 
 We need to create policy first,
 
+In below terraform is policy name it can be anything..
+
 ```
 vault policy write terraform - <<EOF
 path "*" {
   capabilities = ["list", "read"]
 }
 
-path "secrets/data/*" {
-  capabilities = ["create", "read", "update", "delete", "list"]
-}
-
 path "kv/data/*" {
   capabilities = ["create", "read", "update", "delete", "list"]
 }
 
-
-path "secret/data/*" {
-  capabilities = ["create", "read", "update", "delete", "list"]
-}
-
-path "auth/token/create" {
-capabilities = ["create", "read", "update", "list"]
-}
 EOF
 ```
 
 Now you'll need to create an AppRole with appropriate policies and configure its authentication settings. Here are the steps to create an AppRole:
 
 **a. Create the AppRole**:
+In below in the first line terraform is role name it can be anything..
+In below in the last line terraform is policy name created in before step.
 
 ```bash
 vault write auth/approle/role/terraform \
@@ -129,7 +121,7 @@ After creating the AppRole, you need to generate a Role ID and Secret ID pair. T
 You can retrieve the Role ID using the Vault CLI:
 
 ```bash
-vault read auth/approle/role/my-approle/role-id
+vault read auth/approle/role/terraform/role-id
 ```
 
 Save the Role ID for use in your Terraform configuration.
@@ -139,7 +131,7 @@ Save the Role ID for use in your Terraform configuration.
 To generate a Secret ID, you can use the following command:
 
 ```bash
-vault write -f auth/approle/role/my-approle/secret-id
+vault write -f auth/approle/role/terraform/secret-id
    ```
 
 This command generates a Secret ID and provides it in the response. Save the Secret ID securely, as it will be used for Terraform authentication.
